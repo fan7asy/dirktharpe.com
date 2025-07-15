@@ -2,11 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Dirk Tharpe | Official Website</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lora&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/jpeg" href="assets/icon.jpg">
   <style>
+    html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
     :root {
       --primary-blue: #6fbaff;
       --accent-blue: #aee4ff;
@@ -17,7 +25,7 @@
       margin: 0;
       font-family: 'Lora', serif;
       color: var(--white);
-      background-color: var(--black);
+      background: var(--black);
       line-height: 1.6;
     }
     .overlay {
@@ -41,22 +49,61 @@
     header {
       background: var(--white);
       color: var(--black);
-      padding: 1rem 2rem;
+      padding: 0.4rem 1rem 0.2rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      z-index: 20;
     }
     .logo {
       font-family: 'Cinzel', serif;
       font-size: 2.8rem;
-      letter-spacing: 1px;
-      color: #004c99;
-      text-shadow: 0 0 6px rgba(0, 76, 153, 0.5);
+      letter-spacing: 2px;
+      color: #111;
+      text-align: center;
       margin: 1rem 0;
+      position: relative;
+      text-shadow:
+        0 0 7px #1113,
+        0 2px 8px #1112;
+      transition: text-shadow 0.25s;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .logo:hover, .logo:focus {
+      text-shadow:
+        0 0 13px #1114,
+        0 2px 16px #1113;
+    }
+    .logo::after {
+      content: '';
+      display: block;
+      margin: 0 auto;
+      width: 40%;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, transparent, #111 50%, transparent 100%);
+      opacity: 0.35;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .logo:hover::after, .logo:focus::after {
+      transform: scaleX(1);
+      transition: transform 0.3s ease;
+    }
+    nav {
+      width: 100%;
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 22;
     }
     nav ul {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 0.5rem 1rem;
       list-style: none;
       padding: 0;
@@ -69,14 +116,253 @@
       text-decoration: none;
     }
     nav a:hover { text-decoration: underline; }
+    /* Dropdown menu style */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
     .dropdown-menu {
       display: none;
       position: absolute;
-      background: var(--primary-blue);
-      padding: 0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 100%;
+      background: #fff;
+      color: #111;
+      border: 1.5px solid #111;
+      border-radius: 6px;
+      min-width: 170px;
+      max-width: 260px;
+      width: max-content;
+      padding: 0.4rem 0;
+      box-shadow: 0 4px 24px #1113;
+      z-index: 11;
+      text-align: left;
+    }
+    .dropdown:hover .dropdown-menu,
+    .dropdown:focus-within .dropdown-menu {
+      display: block;
+    }
+    .dropdown-menu li {
+      width: 100%;
+      padding: 0;
+    }
+    .dropdown-menu a {
+      color: #111 !important;
+      display: block;
+      padding: 0.55rem 1.25rem;
+      font-family: 'Lora', serif;
+      font-weight: 600;
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      transition: background 0.18s;
       border-radius: 4px;
     }
-    .dropdown:hover .dropdown-menu { display: block; }
+    .dropdown-menu a:hover {
+      background: #f4f4f4;
+    }
+    /* Hamburger styles */
+    .hamburger {
+      display: none;
+      position: absolute;
+      left: 1.2rem;
+      top: 1.1rem;
+      width: 37px;
+      height: 37px;
+      background: none;
+      border: none;
+      z-index: 101;
+      cursor: pointer;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      transition: opacity 0.2s;
+    }
+    .hamburger:focus {
+      outline: 2px solid var(--primary-blue);
+    }
+    .hamburger-bar {
+      width: 28px;
+      height: 4px;
+      margin: 3px 0;
+      background: #111;
+      border-radius: 3px;
+      transition: none;
+      box-shadow: 0 0 5px #0001, 0 1px 8px #1112;
+    }
+    .hamburger.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    /* Mobile nav overlay OUTSIDE header/content-fade */
+    .mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(34,34,40,0.96);
+  z-index: 99999;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  /* Start hidden (off left) */
+  transform: translateX(-100%);
+  transition: transform 0.32s cubic-bezier(.72,0,0,1.1);
+}
+
+@supports not (height: 100dvh) {
+  .mobile-nav {
+    height: 100vh;
+    min-height: 100vh;
+  }
+}
+.mobile-nav.open {
+  transform: translateX(0);
+}
+.mobile-nav .close-x {
+  position: absolute;
+  top: 1.1rem;
+  left: 1.8rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: bold;
+  z-index: 200;
+  cursor: pointer;
+  outline: none;
+  transition: color 0.2s;
+}
+    .mobile-nav .close-x:hover {
+      color: var(--accent-blue);
+    }
+    .mobile-nav ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-left: 0;
+  margin-top: 3.5rem;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+    .mobile-nav li {
+      width: 100%;
+      list-style: none;
+      padding: 0;
+    }
+    .mobile-nav a {
+      display: block;
+      width: 100%;
+      padding: 1.05rem 2.3rem;
+      font-size: 1.25rem;
+      color: var(--primary-blue);
+      font-family: 'Playfair Display', serif;
+      font-weight: bold;
+      border-radius: 0 30px 30px 0;
+      transition: background 0.19s;
+      text-decoration: none;
+      letter-spacing: 1.2px;
+    }
+    .mobile-nav a:hover {
+      background: rgba(175,221,255,0.07);
+      color: var(--accent-blue);
+    }
+    .mobile-dropdown {
+      width: 100%;
+    }
+    .mobile-dropdown-btn {
+      background: none;
+      border: none;
+      color: var(--primary-blue);
+      font-size: 1.25rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 1.05rem 2.3rem;
+      cursor: pointer;
+      text-align: left;
+      border-radius: 0 30px 30px 0;
+      outline: none;
+      transition: background 0.18s;
+      letter-spacing: 1.2px;
+    }
+    .mobile-dropdown-btn:hover, .mobile-dropdown-btn:focus {
+      background: rgba(175,221,255,0.07);
+      color: var(--accent-blue);
+    }
+    .mobile-dropdown-btn .arrow {
+      margin-left: auto;
+      font-size: 1.2rem;
+      transition: transform 0.18s;
+      pointer-events: none;
+    }
+    .mobile-dropdown.open .arrow {
+      transform: rotate(90deg);
+    }
+    .mobile-dropdown-menu {
+      display: none;
+      flex-direction: column;
+      background: none;
+      padding-left: 2.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .mobile-dropdown.open .mobile-dropdown-menu {
+      display: flex;
+    }
+    .mobile-dropdown-menu a {
+      font-size: 1.09rem;
+      color: var(--accent-blue);
+      background: none;
+      font-family: 'Lora', serif;
+      font-weight: normal;
+      border-radius: 0 24px 24px 0;
+      padding: 0.62rem 0;
+      transition: color 0.18s;
+      letter-spacing: normal;
+    }
+    .mobile-dropdown-menu a:hover {
+      color: #fff;
+      background: rgba(140,200,255,0.03);
+    }
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+    @media (min-width: 769px) {
+      .mobile-nav, .hamburger {
+        display: none !important;
+      }
+      nav {
+        display: flex;
+      }
+    }
+
+    .mobile-nav a,
+.mobile-nav .mobile-dropdown-btn {
+  color: #fff !important;
+}
+
+.mobile-nav a:hover,
+.mobile-nav .mobile-dropdown-btn:hover,
+.mobile-nav a:focus,
+.mobile-nav .mobile-dropdown-btn:focus {
+  color: #aee4ff !important; /* or any accent you want for hover */
+}
+
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -90,18 +376,52 @@
       box-sizing: border-box;
     }
     .hero {
-      background: linear-gradient(to bottom, var(--white) 0%, var(--white) 80%, var(--black) 100%);
-      padding: 2rem 2rem 4rem;
+      background-color: #fff;
+      background-image: 
+        linear-gradient(to bottom,
+          rgba(255,255,255,1) 0%,
+          rgba(255,255,255,1) 60px,
+          rgba(255,255,255,0.95) 100px,
+          rgba(255,255,255,0.1) 280px,
+          rgba(17,17,17,0.01) 80%,
+          #111 97%,
+          #111 100%),
+        url('assets/wall.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 0rem 2rem 4rem;
       text-align: center;
+      margin: 0;
+      border: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .hero > * {
+      position: relative;
+      z-index: 2;
+      color: #111 !important;
+      text-shadow: 0 1px 9px #fff, 0 1px 18px #fff7;
     }
     .hero h2 {
       font-size: 2.5rem;
-      color: #004c99;
+      color: #004c99 !important;
       margin-bottom: 0.5rem;
+      text-shadow: 0 2px 18px #fff;
     }
     .hero p {
-      color: var(--black);
+      color: #222 !important;
       margin-top: 0;
+      font-weight: 600;
+      text-shadow: 0 1px 12px #fff;
+    }
+    .progress-section {
+      background: #111;
+      margin-top: 0;
+      padding: 3.6rem 2rem 3rem 2rem;
+      border: 0;
+      position: relative;
+      z-index: 2;
     }
     .progress-bar {
       margin-bottom: 1.5rem;
@@ -182,7 +502,10 @@
       will-change: transform, opacity;
       animation: sweep-move-fade 1.8s linear infinite;
     }
-    /* Sweep glow that spills over background */
+    .bar-fill.full {
+  border-radius: 20px !important;
+}
+
     .bar-fill .sweep::after {
       content: '';
       position: absolute;
@@ -250,13 +573,30 @@
       font-family: 'Lora', serif;
       font-size: 1rem;
     }
+    .btn,
+    .btn:hover,
+    .btn:focus {
+      text-decoration: none !important;
+    }
     .mailing-list input[type="email"] {
       padding: 0.5rem;
       width: 100%;
       max-width: 400px;
+      min-width: 0;
       margin-bottom: 1rem;
       border: none;
       border-radius: 4px;
+      box-sizing: border-box;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (max-width: 520px) {
+      .mailing-list input[type="email"] {
+        max-width: 96vw;
+        min-width: 140px;
+        font-size: 1rem;
+      }
     }
     .mailing-list button {
       background: var(--primary-blue);
@@ -292,6 +632,105 @@
       box-shadow: 0 0 25px #004c99, 0 0 40px #004c99;
       transform: scale(1.02);
     }
+    @media (max-width: 850px) {
+      nav ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem 0.4rem;
+      }
+      .container {
+        padding: 0 0.5rem;
+      }
+      .hero {
+        padding: 0 0.8rem 3rem 0.8rem;
+      }
+      .progress-section {
+        padding: 3.2rem 0.8rem 2.2rem 0.8rem;
+      }
+    }
+    @media (max-width: 570px) {
+      .logo {
+        font-size: 2.1rem;
+      }
+      .hero {
+        padding: 0 0.4rem 2rem 0.4rem;
+      }
+      .progress-section, .section, .mailing-list {
+        padding: 2.3rem 0.4rem;
+      }
+      nav ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.25rem 0.25rem;
+      }
+    }
+    .hero-image-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 0 1rem;
+    }
+    @media (max-width: 480px) {
+      .hero-image-wrapper {
+        padding: 0 1.5rem;
+      }
+    }
+    .hero-image-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 0 3rem;
+      box-sizing: border-box;
+    }
+    .hero-image {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+    }
+    @media (max-width: 380px) {
+      .hero-image-wrapper {
+        padding: 0 2rem;
+      }
+      .hero-image {
+        max-width: 280px;
+      }
+    }
+    /* iOS 100vh fix */
+    @supports (-webkit-touch-callout: none) {
+      .mobile-nav {
+        min-height: -webkit-fill-available;
+        height: -webkit-fill-available;
+      }
+      html, body {
+        min-height: -webkit-fill-available;
+        height: -webkit-fill-available;
+      }
+    }
+    @media (max-width: 768px) {
+  .hero h2 {
+    margin-top: 0 !important;
+    margin-bottom: 0.4rem; /* you can tweak this */
+  }
+  .hero p {
+    margin-top: 0 !important;
+  }
+}
+@media (max-width: 768px) {
+  .mobile-nav a,
+  .mobile-nav .mobile-dropdown-btn,
+  .mobile-nav .mobile-dropdown-menu a {
+    font-size: 1.3rem !important;
+    /* Increase as you see fit */
+  }
+}
+@media (max-width: 768px) {
+  .mobile-nav a,
+  .mobile-nav .mobile-dropdown-btn {
+    font-size: 1.35rem !important;  /* Main menu size */
+  }
+  .mobile-nav .mobile-dropdown-menu a {
+    font-size: 1.11rem !important;  /* Submenu, slightly smaller */
+  }
+}
   </style>
 </head>
 <body style="background-color: white;">
@@ -300,6 +739,13 @@
     <!-- Header -->
     <header>
       <h1 class="logo">Dirk Tharpe</h1>
+      <!-- Hamburger (Mobile only) -->
+      <button class="hamburger" aria-label="Open navigation" aria-controls="mobile-menu" aria-expanded="false">
+        <span class="hamburger-bar bar1"></span>
+        <span class="hamburger-bar bar2"></span>
+        <span class="hamburger-bar bar3"></span>
+      </button>
+      <!-- Desktop Nav -->
       <nav>
         <ul>
           <li><a href="#home">Home</a></li>
@@ -325,8 +771,8 @@
     <section id="home" class="hero">
       <h2>New Release: <span class="highlight">Metal on Flesh</span></h2>
       <p>Now available in hardcover, ebook, and audiobook.</p>
-      <div style="display: flex; justify-content: center; margin-top: 1rem;">
-        <img src="assets/Metal on Flesh Cover.jpg" alt="Metal on Flesh Book Cover" class="image-bordered" style="max-width: 100%; height: auto; max-height: 500px;" />
+      <div class="hero-image-wrapper">
+        <img src="assets/Metal on Flesh Cover.jpg" alt="Metal on Flesh Book Cover" class="image-bordered hero-image" />
       </div>
       <div style="margin-top: 2.5rem;">
         <a href="#books-list" class="btn">Explore the Series</a>
@@ -338,14 +784,21 @@
         <h2>Book Progress</h2>
         <div class="progress-bar">
           <label>Book Title 1</label>
-          <div class="bar" data-progress="65">
+          <div class="bar" data-progress="100">
             <span class="bar-fill"><span class="sweep"></span></span>
             <span class="progress-value">0%</span>
           </div>
         </div>
         <div class="progress-bar">
           <label>Book Title 2</label>
-          <div class="bar" data-progress="30">
+          <div class="bar" data-progress="45">
+            <span class="bar-fill"><span class="sweep"></span></span>
+            <span class="progress-value">0%</span>
+          </div>
+        </div>
+        <div class="progress-bar">
+          <label>Book Title 3</label>
+          <div class="bar" data-progress="9">
             <span class="bar-fill"><span class="sweep"></span></span>
             <span class="progress-value">0%</span>
           </div>
@@ -356,7 +809,7 @@
     <section class="mailing-list">
       <div class="container">
         <h2>Join the Mailing List</h2>
-        <p>Sign up and receive a free ebook of <em>"George Droyd"</em></p>
+        <p>Sign up and receive a free ebook of <em>"XYZ"</em></p>
         <form action="#" method="POST">
           <input type="email" placeholder="Your email" required />
           <button type="submit">Subscribe</button>
@@ -376,28 +829,124 @@
       </p>
     </footer>
   </div>
+  <!-- MOBILE NAV OVERLAY IS OUTSIDE .content-fade, AS A DIRECT BODY CHILD! -->
+  <nav class="mobile-nav" id="mobile-menu" aria-hidden="true">
+    <button class="close-x" aria-label="Close navigation">&times;</button>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li class="mobile-dropdown">
+        <button class="mobile-dropdown-btn" aria-expanded="false">
+          Books <span class="arrow">&#9654;</span>
+        </button>
+        <div class="mobile-dropdown-menu">
+          <a href="#books-list">Books</a>
+          <a href="#story-so-far">Story So Far</a>
+          <a href="#progress">Progress Tracker</a>
+          <a href="#glossary">Glossary</a>
+        </div>
+      </li>
+      <li><a href="#updates">Updates</a></li>
+      <li><a href="#map">Map</a></li>
+      <li><a href="#art">Art</a></li>
+      <li><a href="#merch">Merch</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
   <script>
+    // Progress bar animation
     window.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll(".bar").forEach((bar) => {
-        const fill = bar.querySelector(".bar-fill");
-        const value = bar.querySelector(".progress-value");
-        const target = +bar.getAttribute("data-progress");
-        let current = 0;
+  document.querySelectorAll(".bar").forEach((bar) => {
+    const fill = bar.querySelector(".bar-fill");
+    const value = bar.querySelector(".progress-value");
+    const sweep = fill.querySelector('.sweep');
+    const target = +bar.getAttribute("data-progress");
+    let current = 0;
 
-        function animateBar() {
-          if (current <= target) {
-            fill.style.width = `${current}%`;
-            value.textContent = `${Math.round(current)}%`;
-            current += 1;
-            requestAnimationFrame(animateBar);
-          } else {
-            fill.style.width = `${target}%`;
-            value.textContent = `${target}%`;
-          }
+    function animateBar() {
+      if (current <= target) {
+        fill.style.width = `${current}%`;
+        value.textContent = `${Math.round(current)}%`;
+        // Hide sweep if under 20%
+        if (sweep) {
+          sweep.style.display = current >= 20 ? 'block' : 'none';
         }
-        animateBar();
-      });
+        current += 1;
+        requestAnimationFrame(animateBar);
+      } else {
+        fill.style.width = `${target}%`;
+        value.textContent = `${target}%`;
+        // Hide sweep if under 20%
+        if (sweep) {
+          sweep.style.display = target >= 20 ? 'block' : 'none';
+        }
+        // 100% rounding (from previous answer)
+        if (target >= 100) {
+          fill.classList.add('full');
+        } else {
+          fill.classList.remove('full');
+        }
+      }
+    }
+    animateBar();
+  });
+});
+
+
+
+    // Hamburger + Mobile Nav
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const closeX = document.querySelector('.close-x');
+    const dropdownBtn = document.querySelector('.mobile-dropdown-btn');
+    const mobileDropdown = document.querySelector('.mobile-dropdown');
+
+    function openMenu() {
+      hamburger.classList.add('hide');
+      mobileNav.classList.add('open');
+      mobileNav.setAttribute('aria-hidden', 'false');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling behind menu
+    }
+    function closeMenu() {
+      hamburger.classList.remove('hide');
+      mobileNav.classList.remove('open');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', openMenu);
+    closeX.addEventListener('click', closeMenu);
+
+    // Close menu on nav link click (mobile only)
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
     });
+
+    // Books dropdown (mobile)
+    dropdownBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const expanded = mobileDropdown.classList.toggle('open');
+      dropdownBtn.setAttribute('aria-expanded', expanded);
+    });
+
+    // Close dropdown when clicking outside (mobile)
+    document.addEventListener('click', (e) => {
+      if (mobileDropdown.classList.contains('open')) {
+        if (!mobileDropdown.contains(e.target)) {
+          mobileDropdown.classList.remove('open');
+          dropdownBtn.setAttribute('aria-expanded', 'false');
+        }
+      }
+    });
+
+    // Optional: ESC closes mobile menu
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Escape" && mobileNav.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+    
   </script>
 </body>
 </html>
