@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>About | Dirk Tharpe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lora&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="assets/icon.jpg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-color: white;">
+  <div class="overlay"></div>
+  <div class="content-fade">
+    <!-- Header -->
+    <header>
+      <h1 class="logo">Dirk Tharpe</h1>
+      <!-- Hamburger (Mobile only) -->
+      <button class="hamburger" aria-label="Open navigation" aria-controls="mobile-menu" aria-expanded="false">
+        <span class="hamburger-bar bar1"></span>
+        <span class="hamburger-bar bar2"></span>
+        <span class="hamburger-bar bar3"></span>
+      </button>
+      <!-- Desktop Nav -->
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li class="dropdown">
+            <a href="index.html#books">Books</a>
+            <ul class="dropdown-menu">
+              <li><a href="index.html#books-list">Books</a></li>
+              <li><a href="index.html#story-so-far">Story So Far</a></li>
+              <li><a href="index.html#progress">Progress Tracker</a></li>
+              <li><a href="index.html#glossary">Glossary</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#updates">Updates</a></li>
+          <li><a href="index.html#map">Map</a></li>
+          <li><a href="index.html#art">Art</a></li>
+          <li><a href="index.html#merch">Merch</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- About Section -->
+    <section id="about" class="about-section section">
+  <div class="container about-container">
+    <img src="assets/dirk.jpg" alt="Dirk Tharpe" class="about-photo" />
+    <div class="about-text">
+      <h2>About Dirk Tharpe</h2>
+      <p>
+       Dirk Tharpe is an author, English Literature major, and teacher from Fresno, California, who lives each day with purpose and discipline. Driven by a love for writing and storytelling, Dirk creates immersive worlds that captivate readers, inspired by classics of fantasy, sci-fi, and the legacy of Star Wars. He’s recently embraced the art of Muay Thai, always seeking new challenges and ways to grow. Dirk’s ultimate dream is to become an established writer, seeing teaching as a way to give back and share his life experience down the road. Whether working two jobs, writing thousands of words daily, or training in martial arts, Dirk refuses to simply live for the weekend—he’s committed to making every day count, always pushing to improve and seize everything life has to offer.
+       This text was ai generated lol
+    </p>
+    </div>
+  </div>
+</section>
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 Dirk Tharpe. All rights reserved.</p>
+      <div class="socials">
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+      </div>
+      <p style="font-family: 'Courier New', Courier, monospace; font-size: 0.8rem;">
+        Website by <a href="https://fan7asy.com" style="color: inherit; text-decoration: none;">fan7asy</a>
+      </p>
+    </footer>
+  </div>
+  <!-- MOBILE NAV OVERLAY IS OUTSIDE .content-fade, AS A DIRECT BODY CHILD! -->
+  <nav class="mobile-nav" id="mobile-menu" aria-hidden="true">
+    <button class="close-x" aria-label="Close navigation">&times;</button>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li class="mobile-dropdown">
+        <button class="mobile-dropdown-btn" aria-expanded="false">
+          Books <span class="arrow">+</span>
+        </button>
+        <div class="mobile-dropdown-menu">
+          <a href="index.html#books-list">Books</a>
+          <a href="index.html#story-so-far">Story So Far</a>
+          <a href="index.html#progress">Progress Tracker</a>
+          <a href="index.html#glossary">Glossary</a>
+        </div>
+      </li>
+      <li><a href="index.html#updates">Updates</a></li>
+      <li><a href="index.html#map">Map</a></li>
+      <li><a href="index.html#art">Art</a></li>
+      <li><a href="index.html#merch">Merch</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+  </nav>
+  <script src="main.js"></script>
+</body>
+</html>
